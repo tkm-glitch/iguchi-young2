@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>チーム紹介｜井口ヤング 少年野球チーム</title>
+  <meta name="description" content="井口ヤングのチーム紹介ページ。理念・指導者・活動スケジュール・フォトギャラリーをご覧いただけます。">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        'red-team':'#C8102E','red-dark':'#8B0000','red-light':'#E84060',
+        'gold':'#F7C948','line-green':'#06C755',
+      }}}
+    }
+  </script>
+
+  <style>
+    body { font-family:'Noto Sans JP',sans-serif; color:#1c1c1c; overflow-x:hidden; }
+    .bebas { font-family:'Bebas Neue',sans-serif; letter-spacing:.04em; }
+
+    #float-line {
+      position:fixed; bottom:24px; right:20px; z-index:9999;
+      display:flex; align-items:center; gap:10px;
+      background:#06C755; color:#fff; padding:14px 20px 14px 16px;
+      border-radius:50px; font-weight:700; font-size:14px;
+      box-shadow:0 6px 24px rgba(6,199,85,.5); text-decoration:none;
+      animation:float-bob 3s ease-in-out infinite; transition:transform .25s,box-shadow .25s;
+    }
+    #float-line:hover{transform:scale(1.06);}
+    @keyframes float-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+    .hero-bg {
+      background:linear-gradient(135deg,#6b0000 0%,#C8102E 55%,#E84060 100%);
+      position:relative; overflow:hidden;
+    }
+    .hero-bg::before {
+      content:''; position:absolute; inset:0;
+      background:url('images/team-hero.jpg') center/cover no-repeat;
+      opacity:.2; mix-blend-mode:luminosity;
+    }
+    .stripe-deco { background:repeating-linear-gradient(-55deg,transparent,transparent 8px,rgba(255,255,255,.06) 8px,rgba(255,255,255,.06) 16px); }
+
+    .card-lift { transition:transform .3s,box-shadow .3s; }
+    .card-lift:hover { transform:translateY(-5px); box-shadow:0 14px 36px rgba(200,16,46,.18); }
+
+    #mobile-menu { display:none; }
+    #mobile-menu.open { display:block; }
+
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s,transform .65s; }
+    .reveal.in { opacity:1; transform:none; }
+
+    .img-cover { width:100%; height:100%; object-fit:cover; object-position:center; }
+    .aspect-coach { aspect-ratio:1/1; }
+    .aspect-sq { aspect-ratio:1/1; }
+
+    /* timeline */
+    .timeline-line { position:absolute; left:20px; top:0; bottom:0; width:2px; background:#fecaca; }
+
+    @media(max-width:640px){
+      #float-line span{display:none;}
+      #float-line{padding:16px;border-radius:50%;}
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <a id="float-line" href="#" aria-label="公式LINEへ">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496c.35.06.71.097 1.082.097 5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+    <span>LINEで相談する</span>
+  </a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-red-team flex items-center justify-center overflow-hidden">
+            <img src="images/logo.png" alt="ロゴ" class="w-full h-full object-cover"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'text-white font-bold text-sm bebas\'>IY</span>'">
+          </div>
+          <div class="leading-tight">
+            <div class="text-red-team font-black text-lg leading-none bebas tracking-wider">井口ヤング</div>
+            <div class="text-gray-400 text-xs">少年野球チーム</div>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-1" id="desktop-nav"></nav>
+        <button id="hamburger" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+          <svg width="22" height="22" fill="none" stroke="#C8102E" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="12" x2="19" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white">
+      <nav id="mobile-nav" class="flex flex-col py-2"></nav>
+    </div>
+  </header>
+
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero-bg stripe-deco relative">
+    <div class="relative z-10 text-center text-white px-4 py-20 sm:py-24 reveal">
+      <p class="text-gold font-bold text-sm tracking-widest uppercase mb-2 bebas">About Us</p>
+      <h1 class="bebas text-6xl sm:text-8xl mb-4" style="text-shadow:0 4px 24px rgba(0,0,0,.4)">チーム紹介</h1>
+      <p class="text-white/80 text-lg max-w-lg mx-auto" id="hero-tagline"></p>
+    </div>
+  </section>
+
+
+  <!-- ═══ TEAM OVERVIEW ═══ -->
+  <section class="bg-white py-16 sm:py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid sm:grid-cols-2 gap-12 items-center">
+
+        <!-- Text -->
+        <div class="reveal">
+          <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-2">Story</p>
+          <h2 class="bebas text-4xl sm:text-5xl mb-6 leading-tight">地域に根ざした<br>20年の歴史</h2>
+          <p class="text-gray-700 leading-relaxed mb-5 text-sm sm:text-base">
+            井口ヤングは<strong id="est-year"></strong>年に創設された少年野球チームです。
+            「楽しく・礼儀正しく・仲間を大切に」という理念のもと、
+            小学1年生から6年生まで約32名の部員が日々グラウンドで汗を流しています。
+          </p>
+          <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
+            野球の技術はもちろん、挨拶・礼節・チームワークといった人間的な成長も大切にしています。
+            ここで出会った仲間は、きっと一生の財産になるはずです。
+          </p>
+          <div class="mt-8 grid grid-cols-2 gap-4" id="stat-mini"></div>
+        </div>
+
+        <!-- Team photo -->
+        <div class="reveal">
+          <div class="rounded-2xl overflow-hidden shadow-xl" style="aspect-ratio:4/3">
+            <img src="images/team-photo.jpg" alt="チーム集合写真" class="img-cover"
+              onerror="this.style.background='#fef2f2';this.src='';this.onerror=null;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ PHILOSOPHY DEEP ═══ -->
+  <section class="bg-red-dark stripe-deco py-16 sm:py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <p class="text-gold font-bold text-sm tracking-widest uppercase mb-2">Philosophy</p>
+        <h2 class="bebas text-4xl sm:text-5xl text-white">チームの理念</h2>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-5 reveal" id="phil-deep"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══ COACHES ═══ -->
+  <section class="bg-gray-50 py-16 sm:py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">Staff</p>
+        <h2 class="bebas text-4xl sm:text-5xl">指導者紹介</h2>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6 reveal" id="coaches-grid"></div>
+      <p class="text-center text-gray-500 text-sm mt-8 reveal">
+        指導者全員が少年野球経験者・保護者出身。お子さんの気持ちに寄り添った指導を心がけています。
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══ SCHEDULE ═══ -->
+  <section class="bg-white py-16 sm:py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">Schedule</p>
+        <h2 class="bebas text-4xl sm:text-5xl">1年間の活動スケジュール</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4 reveal" id="annual-schedule"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══ GALLERY ═══ -->
+  <section class="bg-gray-50 py-16 sm:py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-10 reveal">
+        <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">Gallery</p>
+        <h2 class="bebas text-4xl sm:text-5xl">フォトギャラリー</h2>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 reveal" id="gallery-grid"></div>
+      <div class="text-center mt-8 reveal">
+        <a href="#" id="gallery-insta-link"
+          class="inline-flex items-center gap-2 border-2 border-gray-200 hover:border-red-team text-gray-600 hover:text-red-team font-bold px-8 py-3 rounded-full transition-colors text-sm">
+          Instagramでもっと見る →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ CTA ═══ -->
+  <section class="bg-red-team stripe-deco py-16 sm:py-20 px-4">
+    <div class="max-w-3xl mx-auto text-center text-white reveal">
+      <h2 class="bebas text-5xl sm:text-6xl mb-4">体験入部はこちら</h2>
+      <p class="text-white/80 mb-8 text-base sm:text-lg">
+        まずは一度グラウンドに来てみてください。<br>道具・費用の心配は不要です！
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="recruit.html" class="bg-white text-red-team font-black text-lg px-10 py-4 rounded-xl hover:bg-gray-100 transition-colors">
+          部員募集ページへ
+        </a>
+        <a href="#" id="cta-line-btn" class="bg-line-green hover:bg-green-500 text-white font-black text-lg px-10 py-4 rounded-xl transition-colors">
+          💬 LINEで体験相談
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-10 px-4 text-sm">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="bebas text-2xl text-white">井口ヤング</div>
+      <nav class="flex flex-wrap gap-4 justify-center" id="footer-nav"></nav>
+      <p class="text-xs">© 2025 井口ヤング All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    const C = SITE_CONFIG;
+    const $ = id => document.getElementById(id);
+
+    ['float-line','cta-line-btn'].forEach(id => { if($(id)) $(id).href = C.contact.lineUrl; });
+    $('gallery-insta-link').href = C.contact.instagramUrl;
+    $('hero-tagline').textContent = C.tagline;
+    $('est-year').textContent = C.established;
+
+    // Nav
+    $('desktop-nav').innerHTML = C.nav.map(n =>
+      `<a href="${n.href}" class="px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-red-team transition-colors rounded-lg hover:bg-red-50 ${n.href==='team.html'?'text-red-team font-bold':''}">${n.label}</a>`
+    ).join('');
+    $('mobile-nav').innerHTML = C.nav.map(n =>
+      `<a href="${n.href}" class="px-5 py-3 text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-team">${n.label}</a>`
+    ).join('');
+    $('footer-nav').innerHTML = C.nav.map(n =>
+      `<a href="${n.href}" class="hover:text-white transition-colors">${n.label}</a>`
+    ).join('');
+    $('hamburger').addEventListener('click', () => $('mobile-menu').classList.toggle('open'));
+
+    // Stats mini
+    const miniStats = [C.stats[0], C.stats[1]];
+    $('stat-mini').innerHTML = miniStats.map(s => `
+      <div class="bg-red-50 rounded-xl p-4 text-center border border-red-100">
+        <div class="bebas text-3xl text-red-team">${s.value}</div>
+        <div class="text-gray-500 text-xs mt-1">${s.label}</div>
+      </div>
+    `).join('');
+
+    // Philosophy deep
+    $('phil-deep').innerHTML = C.philosophy.map(p => `
+      <div class="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-7 text-white text-center card-lift">
+        <div class="text-5xl mb-4">${p.icon}</div>
+        <h3 class="bebas text-2xl mb-3 text-gold">${p.title}</h3>
+        <p class="text-white/80 text-sm leading-relaxed">${p.desc}</p>
+      </div>
+    `).join('');
+
+    // Coaches
+    $('coaches-grid').innerHTML = C.images.coaches.map(c => `
+      <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-lift border border-gray-100 text-center">
+        <div class="aspect-coach overflow-hidden bg-gray-100">
+          <img src="${c.img}" alt="${c.name}" class="img-cover"
+            onerror="this.style.background='#fef2f2';this.src='';this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-5xl bg-red-50\'>👨‍🏫</div>';this.onerror=null;">
+        </div>
+        <div class="p-5">
+          <div class="text-xs font-bold text-red-team uppercase tracking-wider mb-1">${c.role}</div>
+          <h3 class="font-black text-gray-900 text-lg">${c.name}</h3>
+        </div>
+      </div>
+    `).join('');
+
+    // Annual schedule
+    const months = [
+      { month:'3〜4月', event:'春季大会・新入部員歓迎', icon:'🌸' },
+      { month:'5〜6月', event:'練習試合・交流戦', icon:'⚾' },
+      { month:'7〜8月', event:'夏季大会・合宿', icon:'☀️' },
+      { month:'9〜10月', event:'秋季大会', icon:'🍂' },
+      { month:'11〜12月', event:'体力強化トレーニング', icon:'💪' },
+      { month:'1〜2月', event:'冬季練習・進級祝賀会', icon:'🎉' },
+    ];
+    $('annual-schedule').innerHTML = months.map(m => `
+      <div class="flex items-center gap-4 bg-white rounded-xl px-5 py-4 border border-gray-100 shadow-sm">
+        <span class="text-3xl">${m.icon}</span>
+        <div>
+          <div class="text-xs font-bold text-red-team uppercase tracking-wide">${m.month}</div>
+          <div class="font-medium text-gray-900 text-sm">${m.event}</div>
+        </div>
+      </div>
+    `).join('');
+
+    // Gallery
+    $('gallery-grid').innerHTML = C.images.gallery.map((src, i) => `
+      <a href="${C.contact.instagramUrl}" target="_blank" rel="noopener"
+        class="aspect-sq rounded-xl overflow-hidden block relative group">
+        <img src="${src}" alt="ギャラリー${i+1}" class="img-cover"
+          onerror="this.style.background='#fef2f2';this.src='';this.onerror=null;">
+        <div class="absolute inset-0 bg-red-team/0 group-hover:bg-red-team/40 transition-all"></div>
+      </a>
+    `).join('');
+
+    // Reveal observer
+    const observer = new IntersectionObserver(entries =>
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

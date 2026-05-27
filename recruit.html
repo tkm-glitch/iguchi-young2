@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部員募集・体験入部｜井口ヤング 少年野球チーム</title>
+  <meta name="description" content="井口ヤングは部員を大募集中！野球未経験でも大歓迎。道具レンタルあり、体験入部随時受付。お茶当番・費用など保護者の不安にも丁寧にお答えします。">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        'red-team':'#C8102E','red-dark':'#8B0000','red-light':'#E84060',
+        'gold':'#F7C948','line-green':'#06C755',
+      }}}
+    }
+  </script>
+
+  <style>
+    body { font-family:'Noto Sans JP',sans-serif; color:#1c1c1c; overflow-x:hidden; }
+    .bebas { font-family:'Bebas Neue',sans-serif; letter-spacing:.04em; }
+
+    /* float LINE */
+    #float-line {
+      position:fixed; bottom:24px; right:20px; z-index:9999;
+      display:flex; align-items:center; gap:10px;
+      background:#06C755; color:#fff; padding:14px 20px 14px 16px;
+      border-radius:50px; font-weight:700; font-size:14px;
+      box-shadow:0 6px 24px rgba(6,199,85,.5); text-decoration:none;
+      animation:float-bob 3s ease-in-out infinite;
+      transition:transform .25s,box-shadow .25s;
+    }
+    #float-line:hover{transform:scale(1.06);box-shadow:0 10px 30px rgba(6,199,85,.6);}
+    @keyframes float-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+    /* hero */
+    .hero-bg {
+      background:linear-gradient(135deg,#6b0000 0%,#C8102E 50%,#E84060 100%);
+      position:relative; overflow:hidden;
+    }
+    .hero-bg::before {
+      content:'';position:absolute;inset:0;
+      background:url('images/recruit-hero.jpg') center/cover no-repeat;
+      opacity:.18; mix-blend-mode:luminosity;
+    }
+    .stripe-deco {
+      background:repeating-linear-gradient(-55deg,transparent,transparent 8px,rgba(255,255,255,.06) 8px,rgba(255,255,255,.06) 16px);
+    }
+
+    /* FAQ accordion */
+    .faq-item summary { cursor:pointer; list-style:none; user-select:none; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item[open] .faq-icon { transform:rotate(45deg); }
+    .faq-icon { transition:transform .3s ease; flex-shrink:0; }
+
+    /* step card */
+    .step-num { font-family:'Bebas Neue',sans-serif; line-height:1; }
+
+    /* card lift */
+    .card-lift { transition:transform .3s,box-shadow .3s; }
+    .card-lift:hover { transform:translateY(-5px); box-shadow:0 14px 36px rgba(200,16,46,.18); }
+
+    /* mobile menu */
+    #mobile-menu { display:none; }
+    #mobile-menu.open { display:block; }
+
+    /* reveal */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s,transform .65s; }
+    .reveal.in { opacity:1; transform:none; }
+
+    .img-cover { width:100%; height:100%; object-fit:cover; object-position:center; }
+    .aspect-hero { aspect-ratio:16/7; }
+
+    @media(max-width:640px){
+      #float-line span{display:none;}
+      #float-line{padding:16px;border-radius:50%;}
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Float LINE -->
+  <a id="float-line" href="#" aria-label="公式LINEへ">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496c.35.06.71.097 1.082.097 5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+    <span>LINEで相談する</span>
+  </a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-red-team flex items-center justify-center overflow-hidden">
+            <img src="images/logo.png" alt="ロゴ" class="w-full h-full object-cover"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'text-white font-bold text-sm bebas\'>IY</span>'">
+          </div>
+          <div class="leading-tight">
+            <div class="text-red-team font-black text-lg leading-none bebas tracking-wider">井口ヤング</div>
+            <div class="text-gray-400 text-xs">少年野球チーム</div>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-1" id="desktop-nav"></nav>
+        <button id="hamburger" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+          <svg width="22" height="22" fill="none" stroke="#C8102E" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="12" x2="19" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white">
+      <nav id="mobile-nav" class="flex flex-col py-2"></nav>
+    </div>
+  </header>
+
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero-bg stripe-deco relative">
+    <div class="relative z-10 text-center text-white px-4 py-20 sm:py-28">
+      <div class="inline-flex items-center gap-2 bg-white/15 border border-white/30 rounded-full px-4 py-1.5 text-sm font-medium mb-6 reveal">
+        <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+        小学1〜6年生 体験入部受付中
+      </div>
+      <h1 class="bebas text-5xl sm:text-7xl leading-tight mb-4 reveal" style="text-shadow:0 4px 24px rgba(0,0,0,.4)">
+        野球、始めてみませんか？<br>
+        <span class="text-gold">一緒にグラウンドで待ってます。</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-white/85 mb-8 max-w-xl mx-auto reveal leading-relaxed">
+        未経験OK・道具レンタルあり。<br>
+        「体験だけ」でも大歓迎です！
+      </p>
+      <a href="#" id="hero-line-btn"
+        class="inline-flex items-center gap-3 bg-line-green hover:bg-green-500 text-white font-black text-xl px-10 py-5 rounded-2xl shadow-xl transition-all hover:scale-105 reveal">
+        <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496c.35.06.71.097 1.082.097 5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+        まずはLINEで体験相談（無料・簡単）
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ═══ PHILOSOPHY ═══ -->
+  <section class="bg-white py-16 sm:py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">Our Philosophy</p>
+        <h2 class="bebas text-4xl sm:text-5xl">井口ヤングが大切にしていること</h2>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6" id="phil-cards"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══ "こんなお子さんに" ═══ -->
+  <section class="bg-red-50 border-y border-red-100 py-14 sm:py-18 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-10 reveal">
+        <h2 class="bebas text-4xl sm:text-5xl text-red-team">こんなお子さんに来てほしい！</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4 reveal" id="target-list"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══ FAQ ═══ -->
+  <section class="bg-white py-16 sm:py-20 px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">FAQ</p>
+        <h2 class="bebas text-4xl sm:text-5xl">保護者の方からよくある質問</h2>
+        <p class="text-gray-500 text-sm mt-2">入部前の不安にまとめてお答えします</p>
+      </div>
+      <div class="space-y-3 reveal" id="faq-list"></div>
+      <p class="text-center text-gray-500 text-sm mt-8 reveal">
+        他にも気になることがあれば、遠慮なく
+        <a href="#" class="text-line-green font-bold underline" id="faq-line-link">公式LINE</a>
+        からお問い合わせください。
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══ EXPERIENCE FLOW ═══ -->
+  <section class="bg-gray-50 py-16 sm:py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">How to Join</p>
+        <h2 class="bebas text-4xl sm:text-5xl">体験入部の流れ</h2>
+        <p class="text-gray-500 text-sm mt-2">当日は手ぶらでOK！ゆっくりご覧ください。</p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5 reveal" id="flow-cards"></div>
+
+      <!-- Practice info -->
+      <div class="mt-10 bg-white rounded-2xl p-7 border border-gray-200 reveal" id="practice-info"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══ BIG LINE CTA ═══ -->
+  <section class="bg-red-dark stripe-deco py-16 sm:py-24 px-4">
+    <div class="max-w-3xl mx-auto text-center text-white reveal">
+      <div class="text-6xl mb-6">⚾</div>
+      <h2 class="bebas text-5xl sm:text-6xl mb-4 leading-tight">
+        まずは「体験したい！」と<br>
+        <span class="text-gold">LINEで送ってみよう</span>
+      </h2>
+      <p class="text-white/80 text-base sm:text-lg mb-10 leading-relaxed">
+        それだけでOKです。日程の調整から丁寧にご案内します。<br>
+        もちろん入部のプレッシャーは一切ありません！
+      </p>
+
+      <a href="#" id="big-line-btn"
+        class="inline-flex flex-col sm:flex-row items-center justify-center gap-4 bg-line-green hover:bg-green-500 text-white font-black text-2xl sm:text-3xl px-10 py-6 rounded-2xl shadow-2xl transition-all hover:scale-105 mb-6 w-full sm:w-auto">
+        <svg width="36" height="36" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496c.35.06.71.097 1.082.097 5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+        公式LINEで体験申し込み →
+      </a>
+
+      <div class="flex items-center justify-center gap-6 text-sm text-white/60">
+        <span>✅ 返信は通常24時間以内</span>
+        <span>✅ 入部強制なし</span>
+        <span>✅ 費用は0円</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-10 px-4 text-sm">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="bebas text-2xl text-white">井口ヤング</div>
+      <nav class="flex flex-wrap gap-4 justify-center" id="footer-nav"></nav>
+      <p class="text-xs">© 2025 井口ヤング All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    const C = SITE_CONFIG;
+    const $ = id => document.getElementById(id);
+
+    // ── LINE URLs ─────────────────────────────────────────
+    ['float-line','hero-line-btn','faq-line-link','big-line-btn'].forEach(id => {
+      if($(id)) $(id).href = C.contact.lineUrl;
+    });
+
+    // ── Nav ───────────────────────────────────────────────
+    $('desktop-nav').innerHTML = C.nav.map(n =>
+      `<a href="${n.href}" class="px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-red-team transition-colors rounded-lg hover:bg-red-50 ${n.href==='recruit.html'?'text-red-team font-bold':''}">${n.label}</a>`
+    ).join('');
+    $('mobile-nav').innerHTML = C.nav.map(n =>
+      `<a href="${n.href}" class="px-5 py-3 text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-team">${n.label}</a>`
+    ).join('');
+    $('footer-nav').innerHTML = C.nav.map(n =>
+      `<a href="${n.href}" class="hover:text-white transition-colors">${n.label}</a>`
+    ).join('');
+    $('hamburger').addEventListener('click', () => $('mobile-menu').classList.toggle('open'));
+
+    // ── Philosophy cards ──────────────────────────────────
+    $('phil-cards').innerHTML = C.philosophy.map(p => `
+      <div class="bg-gray-50 rounded-2xl p-7 text-center border border-gray-100 card-lift reveal">
+        <div class="text-5xl mb-4">${p.icon}</div>
+        <h3 class="bebas text-2xl text-red-team mb-3">${p.title}</h3>
+        <p class="text-gray-600 text-sm leading-relaxed">${p.desc}</p>
+      </div>
+    `).join('');
+
+    // ── Target list ───────────────────────────────────────
+    const targets = [
+      '⚾ 野球に興味があるお子さん','🌱 スポーツを始めたいお子さん',
+      '😊 新しい友達を作りたいお子さん','💪 体を動かすことが好きなお子さん',
+      '🏆 目標に向かって頑張れるお子さん','🤔 何か得意なことを見つけたいお子さん',
+    ];
+    $('target-list').innerHTML = targets.map(t => `
+      <div class="flex items-center gap-3 bg-white rounded-xl px-5 py-4 shadow-sm border border-red-100">
+        <span class="text-xl">${t.split(' ')[0]}</span>
+        <span class="font-medium text-gray-800">${t.split(' ').slice(1).join(' ')}</span>
+      </div>
+    `).join('');
+
+    // ── FAQ ───────────────────────────────────────────────
+    $('faq-list').innerHTML = C.faq.map((f, i) => `
+      <details class="faq-item bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <summary class="flex items-center justify-between px-5 py-4 gap-4 hover:bg-red-50 transition-colors">
+          <div class="flex items-start gap-3">
+            <span class="text-red-team font-black text-sm mt-0.5 flex-shrink-0">Q${i+1}.</span>
+            <span class="font-bold text-gray-900 text-sm sm:text-base">${f.q}</span>
+          </div>
+          <span class="faq-icon text-red-team text-2xl leading-none font-light flex-shrink-0">+</span>
+        </summary>
+        <div class="px-5 pb-5 pt-2 border-t border-gray-100">
+          <div class="flex gap-3">
+            <span class="text-line-green font-black text-sm mt-0.5 flex-shrink-0">A.</span>
+            <p class="text-gray-700 text-sm leading-relaxed">${f.a}</p>
+          </div>
+        </div>
+      </details>
+    `).join('');
+
+    // ── Experience flow ───────────────────────────────────
+    $('flow-cards').innerHTML = C.experienceFlow.map(s => `
+      <div class="bg-white rounded-2xl p-6 border border-gray-200 flex gap-5 card-lift reveal">
+        <div class="step-num text-6xl text-red-team/20 font-black leading-none flex-shrink-0 select-none bebas">${s.step}</div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-base mb-2">${s.title}</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">${s.desc}</p>
+        </div>
+      </div>
+    `).join('');
+
+    // ── Practice info ─────────────────────────────────────
+    $('practice-info').innerHTML = `
+      <h3 class="bebas text-xl text-red-team mb-4">📍 練習場所・スケジュール</h3>
+      <dl class="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+        <div><dt class="text-gray-400 text-xs font-bold uppercase mb-0.5">練習場所</dt><dd class="font-medium text-gray-900">${C.contact.practiceLocation}</dd></div>
+        <div><dt class="text-gray-400 text-xs font-bold uppercase mb-0.5">住所</dt><dd class="font-medium text-gray-900">${C.contact.practiceAddress}</dd></div>
+        <div><dt class="text-gray-400 text-xs font-bold uppercase mb-0.5">練習日時</dt><dd class="font-medium text-gray-900">${C.contact.practiceSchedule}</dd></div>
+        <div><dt class="text-gray-400 text-xs font-bold uppercase mb-0.5">服装・持ち物</dt><dd class="font-medium text-gray-900">動きやすい服装・運動靴のみ。道具は無料レンタルあり。</dd></div>
+      </dl>
+      <p class="text-xs text-gray-400 mt-4">※ ${C.contact.practiceNote}</p>
+    `;
+
+    // ── Scroll reveal ─────────────────────────────────────
+    const observer = new IntersectionObserver(entries =>
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

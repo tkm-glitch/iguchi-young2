@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    ★ タイトルを記事に合わせて変更してください
+    例: <title>6月15日 練習試合 | 井口ヤングベースボールクラブ</title>
+  -->
+  <title>【記事タイトル】 | 井口ヤングベースボールクラブ</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<div class="article-wrap">
+
+  <!-- ─── 記事ヘッダー ────────────────── -->
+  <div class="article-header">
+    <div class="article-meta">
+      <!-- 日付を変更してください（例: 2025/06/15） -->
+      <span class="news-card-date">2025/00/00</span>
+      <!-- カテゴリを1つ選んでください: 試合 / 練習 / イベント / お知らせ -->
+      <span class="cat-badge cat-試合">試合</span>
+    </div>
+    <!-- 記事タイトルを入力してください -->
+    <h1>【記事タイトルをここに入力】</h1>
+  </div>
+
+  <!-- ─── 記事本文 ─────────────────────── -->
+  <div class="article-body">
+
+    <!-- ★ここから本文を書きます。以下はサンプル構成です。 -->
+
+    <!-- 【1】全体の雰囲気を一言で伝える（2〜3行） -->
+    <p>
+      今日は快晴のもと、○○グラウンドで練習試合を行いました。
+      相手チームは○○クラブ。緊張感のある白熱した試合となりました！
+    </p>
+
+    <!-- 【2】試合結果（試合の日のみ） -->
+    <h2>試合結果</h2>
+    <table class="info-table" style="margin-bottom:24px;">
+      <tr><th>対戦相手</th><td>○○ファイターズ</td></tr>
+      <tr><th>スコア</th><td>○ 対 ○（勝ち / 負け / 引き分け）</td></tr>
+      <tr><th>投手</th><td>○○くん（○年）</td></tr>
+    </table>
+
+    <!-- 【3】試合・練習のハイライト -->
+    <h2>今日のハイライト</h2>
+    <p>
+      3回表に○○くんがタイムリーヒットを放ち、先制点を獲得！
+      守備でも○○くんがダイビングキャッチを決め、チームを盛り上げてくれました。
+    </p>
+
+    <!--
+      写真を入れる場合はここに：
+      <img src="../images/2025-06-15-01.jpg" alt="試合の様子">
+    -->
+
+    <!-- 【4】今日のヒーロー（必ず誰か1人紹介！） -->
+    <h2>今日のヒーロー</h2>
+    <div class="highlight">
+      🏆 ○○ くん（○年生）<br>
+      守備で難しい打球を果敢にダイビングキャッチ！チーム全員が沸きました。
+      試合後も笑顔で「次はもっとうまくなる！」と言っていた姿が印象的でした。
+    </div>
+
+    <!-- 【5】コーチから一言 -->
+    <h2>コーチから一言</h2>
+    <p>
+      今日は声出しが格段によくなりました。あとはスイングスピードを磨いていきましょう！
+      次回の練習では、バッティング重点で行います。
+    </p>
+
+    <!-- 【6】次回の予定 -->
+    <h2>次回の練習・試合</h2>
+    <table class="info-table">
+      <tr><th>日時</th><td>○月○日（○）午前9:00〜12:00</td></tr>
+      <tr><th>場所</th><td>○○グラウンド</td></tr>
+      <tr><th>連絡事項</th><td>雨天中止の場合はLINEでお知らせします</td></tr>
+    </table>
+
+  </div><!-- /article-body -->
+
+  <!-- ─── 記事フッター（固定・変更不要） ── -->
+  <div class="article-footer">
+    <div style="background:var(--green-light);border-radius:var(--radius);padding:20px 24px;text-align:center;">
+      <p style="font-weight:700;margin-bottom:8px;">📸 練習・試合の写真はInstagramでもっとたくさん公開中！</p>
+      <a class="btn btn-outline mt-8" href="#" data-insta-href style="margin-right:8px;">Instagramをフォロー <span data-insta-id></span></a>
+      <a class="btn btn-line mt-8" href="#" data-line-href>💬 体験入部を相談する</a>
+    </div>
+    <div class="mt-16">
+      <a class="back-link" href="index.html">← 活動報告一覧に戻る</a>
+    </div>
+  </div>
+
+</div><!-- /article-wrap -->
+
+<footer class="site-footer" id="site-footer"></footer>
+<div id="fixed-line"></div>
+
+<script src="../config.js"></script>
+<script src="../js/components.js"></script>
+<script src="../js/main.js"></script>
+<script>
+  renderHeader("../");
+  renderFooter("../");
+  renderFixedLine();
+</script>
+</body>
+</html>
