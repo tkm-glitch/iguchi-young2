@@ -109,10 +109,11 @@ const SITE_CONFIG = {
   },
 
   /* ───────── 最新の活動報告（仮データ） ───────── */
+  /* ── トップページに表示する最新3件（news-list.js と同期してください）── */
   recentPosts: [
-    { date:"2025年6月8日",  category:"試合結果", title:"春季大会 準決勝進出！熱戦を制して4強入り",  excerpt:"先週末に行われた春季大会の準々決勝で、井口ヤングが見事勝利！準決勝への切符を手にしました。", img:"images/blog1.jpg", href:"news/2025-06-08.html" },
-    { date:"2025年5月25日", category:"練習風景", title:"バッティング練習で全員ホームラン達成！",     excerpt:"今週の練習では全部員がホームラン性の当たりを放ちました。春の大会に向けて打撃絶好調です！", img:"images/blog2.jpg", href:"news/2025-05-25.html" },
-    { date:"2025年5月10日", category:"イベント",  title:"新入部員歓迎会！2名の仲間が加わりました", excerpt:"5月より2名の新しい仲間が入部。早速みんなと打ち解けて楽しく練習しています。",           img:"images/blog3.jpg", href:"news/2025-05-10.html" },
+    { date:"2025年6月8日",  category:"試合結果", title:"春季大会 準決勝進出！熱戦を制して4強入り",  excerpt:"先週末に行われた春季大会の準々決勝で、井口ヤングが見事勝利！準決勝への切符を手にしました。", img:"images/blog1.jpg", href:"post.html?id=2025-06-08"  },
+    { date:"2025年5月25日", category:"練習風景", title:"バッティング練習で全員ホームラン達成！",     excerpt:"今週の練習では全部員がホームラン性の当たりを放ちました。春の大会に向けて打撃絶好調です！", img:"images/blog2.jpg", href:"post.html?id=2025-05-25"  },
+    { date:"2025年5月10日", category:"イベント",  title:"新入部員歓迎会！2名の仲間が加わりました", excerpt:"5月より2名の新しい仲間が入部。早速みんなと打ち解けて楽しく練習しています。",           img:"images/blog3.jpg", href:"post.html?id=2025-05-10"  },
   ],
 
 };

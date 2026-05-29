@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>活動報告｜井口ヤング</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{'red-team':'#C8102E','red-dark':'#8B0000','gold':'#F7C948','line-green':'#06C755'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script src="news-list.js"></script>
+  <script src="js/common.js"></script>
+  <style>
+    /* 本文レンダリング用スタイル */
+    .post-body h2 {
+      font-weight: 900; font-size: 1.2rem; color: #1c1c1c;
+      margin: 2rem 0 0.75rem; padding-left: 12px;
+      border-left: 4px solid #C8102E;
+    }
+    .post-body p { margin-bottom: 1.1rem; line-height: 1.9; color: #374151; }
+    .post-body .box-result {
+      background: #fef2f2; border-left: 4px solid #C8102E;
+      border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 1.5rem 0;
+    }
+    .post-body .box-result strong { color: #C8102E; font-size: 1.1rem; }
+    .post-body .box-hero {
+      background: #fffbeb; border: 1px solid #fde68a;
+      border-radius: 12px; padding: 16px 20px; margin: 1.5rem 0;
+    }
+    .post-body .box-next {
+      background: #f0fdf4; border: 1px solid #bbf7d0;
+      border-radius: 12px; padding: 16px 20px; margin: 1.5rem 0;
+      font-size: 0.9rem; color: #166534;
+    }
+    .post-body .box-info {
+      background: #eff6ff; border: 1px solid #bfdbfe;
+      border-radius: 12px; padding: 16px 20px; margin: 1.5rem 0;
+      font-size: 0.9rem; color: #1e40af;
+    }
+    .post-body hr { border: none; border-top: 2px dashed #e5e7eb; margin: 1.5rem 0; }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+<a id="float-line" href="#" class="js-line" aria-label="公式LINE">
+  <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496A10 10 0 0012 22c5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+  <span>LINEで相談する</span>
+</a>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-white shadow-md">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-red-team flex items-center justify-center overflow-hidden flex-shrink-0">
+          <img src="images/logo.png" alt="ロゴ" class="w-full h-full object-cover" onerror="this.outerHTML='<span class=\'bebas text-white text-sm\'>IY</span>'">
+        </div>
+        <div class="leading-tight">
+          <div class="bebas text-red-team text-xl leading-none tracking-wider">井口ヤング</div>
+          <div class="text-gray-400 text-xs">三鷹市の少年野球チーム</div>
+        </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-1" id="desktop-nav"></nav>
+      <button id="hamburger" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+        <svg width="22" height="22" fill="none" stroke="#C8102E" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="12" x2="19" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white">
+    <nav id="mobile-nav" class="flex flex-col py-2"></nav>
+  </div>
+</header>
+
+<!-- ARTICLE -->
+<article class="max-w-3xl mx-auto px-4 py-12 sm:py-16" id="article-container">
+  <!-- JS で描画 -->
+  <div class="text-center py-20 text-gray-400" id="loading">
+    <div class="text-5xl mb-4 animate-spin">⚾</div>
+    <p>読み込み中...</p>
+  </div>
+</article>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-400 py-10 px-4">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="bebas text-2xl text-white">井口ヤング</div>
+    <nav class="flex flex-wrap gap-4 justify-center text-sm" id="footer-nav"></nav>
+    <p class="text-xs">© 2025 井口ヤング All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  initSite({ root:'.', activePage:'blog.html' });
+
+  /* ── body テキストを HTML に変換 ── */
+  function renderBody(raw) {
+    const lines = raw.trim().split('\n');
+    let html = '';
+    let buf  = '';
+
+    const flush = () => {
+      const t = buf.trim();
+      if (t) html += `<p>${t.replace(/\n/g,'<br>')}</p>\n`;
+      buf = '';
+    };
+
+    lines.forEach(line => {
+      const t = line.trim();
+
+      // 【見出し】
+      if (t.startsWith('【見出し】')) {
+        flush();
+        html += `<h2>${t.replace('【見出し】','')}</h2>\n`;
+        return;
+      }
+      // 【結果】スコア等
+      if (t.startsWith('【結果】')) {
+        flush();
+        const content = lines.slice(lines.indexOf(line)+1).join('\n');
+        // inline: just one line of content follows
+        html += `<div class="box-result"><strong>試合結果</strong><br>${t.replace('【結果】','')}</div>\n`;
+        return;
+      }
+      // 【新入部員紹介】【紹介】
+      if (t.startsWith('【新入部員紹介】') || t.startsWith('【紹介】')) {
+        flush();
+        html += `<div class="box-info"><strong>${t.replace(/【.*?】/,'').trim()||'紹介'}</strong><br>`;
+        return;
+      }
+      // 【次回予告】
+      if (t.startsWith('【次回予告】')) {
+        flush();
+        html += `<div class="box-next">📅 <strong>次回の活動予告</strong><br>${t.replace('【次回予告】','')}</div>\n`;
+        return;
+      }
+      // 【今日のヒーロー】→ gold box
+      if (t.startsWith('【ヒーロー】') || t.startsWith('【今日のヒーロー】')) {
+        flush();
+        html += `<div class="box-hero">🌟 <strong>${t.replace(/【.*?】/,'').trim()||'今日のヒーロー'}</strong><br>`;
+        return;
+      }
+      // 空行→段落区切り
+      if (t === '') { flush(); return; }
+      // 通常行
+      buf += (buf ? '\n' : '') + t;
+    });
+    flush();
+    return html;
+  }
+
+  /* ── URLパラメータから記事IDを取得 ── */
+  const params = new URLSearchParams(location.search);
+  const id     = params.get('id');
+  const post   = id ? NEWS_LIST.find(n => n.id === id) : null;
+
+  const container = document.getElementById('article-container');
+
+  if (!post) {
+    container.innerHTML = `
+      <div class="text-center py-20">
+        <div class="text-6xl mb-6">😢</div>
+        <h1 class="font-black text-2xl text-gray-900 mb-4">記事が見つかりませんでした</h1>
+        <a href="blog.html" class="text-red-team font-bold hover:underline">← 活動報告一覧へ戻る</a>
+      </div>`;
+  } else {
+    // OGP タイトル更新
+    document.title = `${post.title}｜井口ヤング`;
+
+    const badgeMap = {'試合結果':'badge-game','練習風景':'badge-practice','イベント':'badge-event','お知らせ':'badge-notice'};
+
+    container.innerHTML = `
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-gray-400 mb-8 flex items-center gap-2 flex-wrap">
+        <a href="index.html" class="hover:text-red-team transition-colors">ホーム</a>
+        <span>›</span>
+        <a href="blog.html" class="hover:text-red-team transition-colors">活動報告</a>
+        <span>›</span>
+        <span class="text-gray-600 line-clamp-1">${post.title}</span>
+      </nav>
+
+      <!-- Meta -->
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-xs font-bold px-3 py-1 rounded-full ${badgeMap[post.cat]||'badge-notice'}">${post.cat}</span>
+        <time class="text-gray-400 text-sm">${post.date}</time>
+      </div>
+
+      <!-- Title -->
+      <h1 class="font-black text-gray-900 text-2xl sm:text-3xl leading-snug mb-8">${post.title}</h1>
+
+      <!-- Eye catch -->
+      <div class="rounded-2xl overflow-hidden mb-10 aspect-card">
+        <img src="images/${post.img||'blog-default.jpg'}" alt="${post.title}" class="img-cover" data-fallback="#fef2f2">
+      </div>
+
+      <!-- Body -->
+      <div class="post-body text-base">${renderBody(post.body||'')}</div>
+
+      <!-- Instagram CTA -->
+      <div class="mt-12 bg-gray-50 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-4 border border-gray-100">
+        <div class="text-4xl">📸</div>
+        <div class="text-center sm:text-left">
+          <p class="font-bold text-gray-900 text-sm mb-0.5">もっと写真はInstagramをチェック！</p>
+          <p class="text-gray-400 text-xs">練習・試合の写真を毎週更新中 @iguchiyoung</p>
+        </div>
+        <a href="#" class="js-instagram sm:ml-auto insta-grad text-white font-bold text-sm px-6 py-2.5 rounded-xl whitespace-nowrap">フォローする →</a>
+      </div>
+
+      <!-- Nav -->
+      <div class="mt-8 pt-8 border-t border-gray-100 flex flex-col sm:flex-row gap-4 justify-between items-center">
+        <a href="blog.html" class="text-red-team font-bold text-sm hover:underline">← 活動報告一覧に戻る</a>
+        <a href="#" class="js-line inline-flex items-center gap-2 bg-line-green text-white font-bold text-sm px-6 py-2.5 rounded-xl">💬 体験入部を相談する</a>
+      </div>`;
+
+    // SNS URL を再適用（動的に追加されたリンク用）
+    document.querySelectorAll('.js-line').forEach(el => el.href = SITE_CONFIG.contact.lineUrl);
+    document.querySelectorAll('.js-instagram').forEach(el => el.href = SITE_CONFIG.contact.instagramUrl);
+  }
+</script>
+</body>
+</html>

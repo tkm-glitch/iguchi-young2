@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>記事投稿ツール｜井口ヤング</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="news-list.js"></script>
+  <style>
+    body { font-family:'Noto Sans JP',sans-serif; background:#f8f8f8; }
+    .bebas { font-family:'Bebas Neue',sans-serif; letter-spacing:.04em; }
+
+    /* フォーム */
+    .f-input {
+      width:100%; border:2px solid #e5e7eb; border-radius:10px;
+      padding:11px 14px; font-size:15px; font-family:inherit;
+      transition:border-color .2s, box-shadow .2s; outline:none; background:#fff;
+    }
+    .f-input:focus { border-color:#C8102E; box-shadow:0 0 0 3px rgba(200,16,46,.1); }
+    textarea.f-input { resize:vertical; min-height:280px; line-height:1.8; }
+    label.lbl { display:block; font-weight:700; font-size:.875rem; color:#374151; margin-bottom:6px; }
+    .hint { font-size:.75rem; color:#9ca3af; margin-top:4px; }
+
+    /* プレビュー */
+    .preview-body h2 {
+      font-weight:900; font-size:1.1rem; color:#111; margin:1.5rem 0 .5rem;
+      padding-left:10px; border-left:4px solid #C8102E;
+    }
+    .preview-body p { margin-bottom:.9rem; line-height:1.85; color:#374151; font-size:.95rem; }
+    .preview-body .box-red   { background:#fef2f2; border-left:4px solid #C8102E; border-radius:0 10px 10px 0; padding:12px 16px; margin:1rem 0; }
+    .preview-body .box-gold  { background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:12px 16px; margin:1rem 0; }
+    .preview-body .box-green { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:12px 16px; margin:1rem 0; font-size:.875rem; color:#166534; }
+    .preview-body .box-blue  { background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:12px 16px; margin:1rem 0; font-size:.875rem; color:#1e40af; }
+
+    /* コード出力エリア */
+    #code-output {
+      background:#1e1e2e; color:#cdd6f4; font-family:'Courier New',monospace;
+      font-size:.8rem; padding:20px; border-radius:12px; white-space:pre-wrap;
+      word-break:break-all; max-height:340px; overflow-y:auto; line-height:1.7;
+    }
+    .copy-btn {
+      background:#C8102E; color:#fff; font-weight:900; padding:12px 28px;
+      border-radius:10px; border:none; cursor:pointer; font-size:.95rem;
+      transition:background .2s, transform .15s; font-family:inherit;
+    }
+    .copy-btn:hover { background:#8B0000; transform:translateY(-1px); }
+    .copy-btn.ok    { background:#06C755; }
+
+    /* ステップバッジ */
+    .step-badge {
+      width:28px; height:28px; border-radius:50%; background:#C8102E;
+      color:#fff; font-weight:900; font-size:.8rem; display:flex;
+      align-items:center; justify-content:center; flex-shrink:0;
+    }
+
+    /* badge */
+    .badge-game     { background:#C8102E; color:#fff; }
+    .badge-practice { background:#2563eb; color:#fff; }
+    .badge-event    { background:#059669; color:#fff; }
+    .badge-notice   { background:#7c3aed; color:#fff; }
+
+    /* カテゴリ選択ボタン */
+    .cat-btn { transition:all .2s; }
+    .cat-btn.active { background:#C8102E !important; color:#fff !important; border-color:#C8102E !important; }
+
+    /* タブ */
+    .tab-btn { transition:border-color .2s, color .2s; }
+    .tab-btn.active { border-bottom:3px solid #C8102E; color:#C8102E; font-weight:700; }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="bg-gray-900 text-white px-4 py-4 shadow-lg">
+  <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-red-600 rounded-full flex items-center justify-center bebas text-sm">IY</div>
+      <div>
+        <div class="bebas text-xl leading-none text-white">井口ヤング</div>
+        <div class="text-gray-400 text-xs">記事投稿ツール</div>
+      </div>
+    </div>
+    <div class="flex gap-3">
+      <a href="blog.html" target="_blank" class="text-gray-300 hover:text-white text-sm border border-gray-600 px-3 py-1.5 rounded-lg transition-colors">活動報告を見る</a>
+      <a href="index.html" target="_blank" class="text-gray-300 hover:text-white text-sm border border-gray-600 px-3 py-1.5 rounded-lg transition-colors">サイトを見る</a>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+
+  <!-- ── STEP GUIDE ── -->
+  <div class="bg-white rounded-2xl p-6 shadow-sm mb-8 border border-gray-100">
+    <h2 class="font-black text-gray-900 text-base mb-4">📋 投稿の手順</h2>
+    <div class="grid sm:grid-cols-4 gap-4">
+      <div class="flex items-start gap-3">
+        <div class="step-badge">1</div>
+        <div class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-900">下のフォームに記入</strong><br>タイトル・本文などを入力</div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="step-badge">2</div>
+        <div class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-900">プレビューで確認</strong><br>右側（PCは右列）で見た目を確認</div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="step-badge">3</div>
+        <div class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-900">コードをコピー</strong><br>「コピーする」ボタンを押す</div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="step-badge">4</div>
+        <div class="text-sm text-gray-600 leading-relaxed"><strong class="text-gray-900">GitHubに貼り付け</strong><br>news-list.js の指定箇所に貼る</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="grid lg:grid-cols-2 gap-6">
+
+    <!-- ══ LEFT: FORM ══ -->
+    <div class="space-y-5">
+
+      <!-- タイトル -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <label class="lbl">📝 記事タイトル <span class="text-red-600">必須</span></label>
+        <input type="text" id="f-title" class="f-input" placeholder="例：春季大会 準決勝進出！熱戦を制して4強入り">
+      </div>
+
+      <!-- 日付 + カテゴリ -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-5">
+        <div>
+          <label class="lbl">📅 投稿日 <span class="text-red-600">必須</span></label>
+          <input type="date" id="f-date" class="f-input">
+        </div>
+        <div>
+          <label class="lbl">🏷️ カテゴリ <span class="text-red-600">必須</span></label>
+          <div class="flex flex-wrap gap-2 mt-1" id="cat-btns">
+            <button class="cat-btn active font-bold text-sm px-4 py-2 rounded-full border-2 border-red-600 text-red-600" data-cat="試合結果">⚾ 試合結果</button>
+            <button class="cat-btn font-bold text-sm px-4 py-2 rounded-full border-2 border-gray-200 text-gray-600" data-cat="練習風景">🏃 練習風景</button>
+            <button class="cat-btn font-bold text-sm px-4 py-2 rounded-full border-2 border-gray-200 text-gray-600" data-cat="イベント">🎉 イベント</button>
+            <button class="cat-btn font-bold text-sm px-4 py-2 rounded-full border-2 border-gray-200 text-gray-600" data-cat="お知らせ">📢 お知らせ</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 概要 -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <label class="lbl">📄 概要文（一覧ページに表示） <span class="text-red-600">必須</span></label>
+        <textarea id="f-excerpt" class="f-input" rows="3" style="min-height:80px" placeholder="例：先週末の春季大会準々決勝で見事勝利！準決勝への切符を手にしました。（50文字程度）"></textarea>
+      </div>
+
+      <!-- 画像 -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <label class="lbl">🖼️ 画像ファイル名</label>
+        <input type="text" id="f-img" class="f-input" placeholder="例：blog4.jpg（images/ フォルダに入れた写真のファイル名）">
+        <p class="hint">images/ フォルダにアップした写真のファイル名を入力してください。<br>空欄の場合はデフォルト画像が表示されます。</p>
+      </div>
+
+      <!-- 本文 -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <label class="lbl">✏️ 本文 <span class="text-red-600">必須</span></label>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <button onclick="insertTag('【見出し】','','カバーしたい内容のタイトル')" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg font-medium transition-colors">＋ 見出し</button>
+          <button onclick="insertTag('【結果】','','例：井口ヤング 5 - 3 相手チーム')" class="text-xs bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-lg font-medium transition-colors">＋ 試合結果ボックス</button>
+          <button onclick="insertTag('【次回予告】','','例：6月15日（日）準決勝')" class="text-xs bg-green-50 hover:bg-green-100 text-green-700 px-3 py-1.5 rounded-lg font-medium transition-colors">＋ 次回予告</button>
+          <button onclick="insertTag('【紹介】','','名前・学年など')" class="text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg font-medium transition-colors">＋ 紹介ボックス</button>
+        </div>
+        <textarea id="f-body" class="f-input" placeholder="本文をここに書いてください。
+空行で段落を分けます。
+
+【見出し】小見出しのタイトル
+ここに内容を書きます。
+
+【結果】井口ヤング 5 - 3 相手チーム
+
+【次回予告】
+6月15日（日）準決勝。応援よろしくお願いします！"></textarea>
+        <div class="mt-3 bg-gray-50 rounded-xl p-4 text-xs text-gray-500 leading-relaxed">
+          <strong class="text-gray-700">使えるタグ（コピーして使ってください）：</strong><br>
+          <code class="bg-white px-1 py-0.5 rounded text-gray-800">【見出し】タイトル</code>　→ 赤い小見出し<br>
+          <code class="bg-white px-1 py-0.5 rounded text-gray-800">【結果】スコア</code>　→ 試合結果の赤いボックス<br>
+          <code class="bg-white px-1 py-0.5 rounded text-gray-800">【次回予告】内容</code>　→ 緑色の予告ボックス<br>
+          <code class="bg-white px-1 py-0.5 rounded text-gray-800">【紹介】内容</code>　→ 青色の紹介ボックス<br>
+          空行 → 段落の区切り
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══ RIGHT: PREVIEW + CODE ══ -->
+    <div class="space-y-5">
+
+      <!-- Tab -->
+      <div class="flex border-b border-gray-200 bg-white rounded-t-2xl px-4 pt-4 gap-4">
+        <button class="tab-btn active pb-3 text-sm" id="tab-preview" onclick="showTab('preview')">👁️ プレビュー</button>
+        <button class="tab-btn pb-3 text-sm text-gray-500" id="tab-code" onclick="showTab('code')">💾 生成コード</button>
+      </div>
+
+      <!-- Preview panel -->
+      <div id="panel-preview" class="bg-white rounded-b-2xl shadow-sm border border-t-0 border-gray-100 p-6 min-h-64">
+
+        <!-- Article preview header -->
+        <div id="prev-meta" class="mb-4">
+          <div class="flex items-center gap-2 mb-3">
+            <span id="prev-badge" class="text-xs font-bold px-3 py-1 rounded-full badge-game">試合結果</span>
+            <span id="prev-date" class="text-gray-400 text-xs"></span>
+          </div>
+          <h2 id="prev-title" class="font-black text-gray-900 text-xl leading-snug mb-3">ここにタイトルが表示されます</h2>
+          <div id="prev-img-wrap" class="rounded-xl overflow-hidden mb-4 bg-gray-100 flex items-center justify-center text-gray-300 text-sm" style="aspect-ratio:4/3; display:flex">
+            📷 画像
+          </div>
+        </div>
+        <div class="preview-body text-sm" id="prev-body">
+          <p class="text-gray-400">本文を入力すると、ここにプレビューが表示されます。</p>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div id="panel-code" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <div class="flex items-center justify-between mb-3">
+            <p class="font-bold text-gray-900 text-sm">📋 生成されたコード</p>
+            <button class="copy-btn" id="copy-btn" onclick="copyCode()">コピーする 📋</button>
+          </div>
+          <pre id="code-output">← 左側のフォームを入力すると
+   コードが自動生成されます</pre>
+        </div>
+
+        <!-- Paste guide -->
+        <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-5">
+          <h3 class="font-black text-yellow-800 text-sm mb-3">📌 GitHub への貼り付け方</h3>
+          <ol class="space-y-3 text-sm text-yellow-900">
+            <li class="flex items-start gap-2">
+              <span class="step-badge text-xs" style="background:#ca8a04;min-width:24px;height:24px">1</span>
+              <span><a href="https://github.com/tkm-glitch/iguchi-young2/edit/main/news-list.js" target="_blank" class="underline font-bold">こちらをクリック</a>してGitHubの編集画面を開く</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="step-badge text-xs" style="background:#ca8a04;min-width:24px;height:24px">2</span>
+              <span>ファイル内の <code class="bg-yellow-100 px-1 rounded">/* ▼▼▼ ここに貼り付け↓ ▼▼▼ */</code> という行を探す</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="step-badge text-xs" style="background:#ca8a04;min-width:24px;height:24px">3</span>
+              <span>その次の行の先頭にカーソルを置き、コピーしたコードを貼り付ける</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="step-badge text-xs" style="background:#ca8a04;min-width:24px;height:24px">4</span>
+              <span>画面下の「<strong>Commit changes</strong>」ボタンを押せば完了！</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 既存記事一覧 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 class="font-black text-gray-900 text-sm">📚 既存の記事一覧（<span id="post-count">0</span>件）</h3>
+        </div>
+        <div class="divide-y divide-gray-50 max-h-64 overflow-y-auto" id="existing-list"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── 今日の日付をデフォルト設定 ──
+  document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+
+  // ── カテゴリ選択 ──
+  let selectedCat = '試合結果';
+  document.getElementById('cat-btns').addEventListener('click', e => {
+    const btn = e.target.closest('[data-cat]');
+    if (!btn) return;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedCat = btn.dataset.cat;
+    updatePreview();
+  });
+
+  // ── タブ切り替え ──
+  function showTab(tab) {
+    document.getElementById('panel-preview').classList.toggle('hidden', tab !== 'preview');
+    document.getElementById('panel-code').classList.toggle('hidden', tab !== 'code');
+    document.getElementById('tab-preview').classList.toggle('active', tab === 'preview');
+    document.getElementById('tab-code').classList.toggle('active', tab === 'code');
+    if (tab === 'code') updateCode();
+  }
+
+  // ── タグ挿入ヘルパー ──
+  function insertTag(before, after, placeholder) {
+    const ta = document.getElementById('f-body');
+    const s = ta.selectionStart, e = ta.selectionEnd;
+    const sel = ta.value.substring(s, e) || placeholder;
+    const insert = '\n' + before + sel + after + '\n';
+    ta.value = ta.value.substring(0,s) + insert + ta.value.substring(e);
+    ta.selectionStart = ta.selectionEnd = s + insert.length;
+    ta.focus();
+    updatePreview();
+  }
+
+  // ── body → HTML 変換（post.html と同じロジック）──
+  function renderBody(raw) {
+    if (!raw) return '<p class="text-gray-400">本文を入力してください</p>';
+    const lines = raw.trim().split('\n');
+    let html = '', buf = '';
+    const flush = () => { const t = buf.trim(); if(t) { html += `<p>${t.replace(/\n/g,'<br>')}</p>`; buf=''; } };
+    lines.forEach(line => {
+      const t = line.trim();
+      if (t.startsWith('【見出し】'))   { flush(); html += `<h2>${t.replace('【見出し】','')}</h2>`; return; }
+      if (t.startsWith('【結果】'))     { flush(); html += `<div class="box-red"><strong>試合結果：</strong>${t.replace('【結果】','')}</div>`; return; }
+      if (t.startsWith('【次回予告】')) { flush(); html += `<div class="box-green">📅 <strong>次回の活動予告：</strong>${t.replace('【次回予告】','')}</div>`; return; }
+      if (t.startsWith('【紹介】'))     { flush(); html += `<div class="box-blue">ℹ️ ${t.replace('【紹介】','')}</div>`; return; }
+      if (t.startsWith('【ヒーロー】')) { flush(); html += `<div class="box-gold">🌟 <strong>今日のヒーロー：</strong>${t.replace('【ヒーロー】','')}</div>`; return; }
+      if (t === '') { flush(); return; }
+      buf += (buf ? '\n' : '') + t;
+    });
+    flush();
+    return html || '<p class="text-gray-400">本文を入力してください</p>';
+  }
+
+  // ── リアルタイムプレビュー更新 ──
+  function updatePreview() {
+    const title   = document.getElementById('f-title').value  || 'ここにタイトルが表示されます';
+    const dateVal = document.getElementById('f-date').value;
+    const img     = document.getElementById('f-img').value;
+    const body    = document.getElementById('f-body').value;
+
+    const badgeMap = {'試合結果':'badge-game','練習風景':'badge-practice','イベント':'badge-event','お知らせ':'badge-notice'};
+
+    document.getElementById('prev-title').textContent = title;
+    document.getElementById('prev-badge').textContent = selectedCat;
+    document.getElementById('prev-badge').className   = `text-xs font-bold px-3 py-1 rounded-full ${badgeMap[selectedCat]||'badge-notice'}`;
+
+    if (dateVal) {
+      const [y,m,d] = dateVal.split('-');
+      document.getElementById('prev-date').textContent = `${y}年${parseInt(m)}月${parseInt(d)}日`;
+    }
+
+    const imgWrap = document.getElementById('prev-img-wrap');
+    if (img) {
+      imgWrap.innerHTML = `<img src="images/${img}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<span class=\\'text-xs text-gray-400\\'>画像: images/${img}</span>'">`;
+    } else {
+      imgWrap.innerHTML = '📷 画像';
+    }
+
+    document.getElementById('prev-body').innerHTML = renderBody(body);
+    updateCode();
+  }
+
+  // ── コード生成 ──
+  function updateCode() {
+    const dateVal = document.getElementById('f-date').value || new Date().toISOString().split('T')[0];
+    const [y,m,d] = dateVal.split('-');
+    const dispDate = `${y}年${parseInt(m)}月${parseInt(d)}日`;
+    const title   = document.getElementById('f-title').value.trim()   || 'タイトル未入力';
+    const excerpt = document.getElementById('f-excerpt').value.trim() || '概要未入力';
+    const img     = document.getElementById('f-img').value.trim()     || 'blog-default.jpg';
+    const body    = document.getElementById('f-body').value;
+
+    const code =
+`  {
+    id:      "${dateVal}",
+    date:    "${dispDate}",
+    cat:     "${selectedCat}",
+    title:   "${title.replace(/"/g,'\\"')}",
+    excerpt: "${excerpt.replace(/"/g,'\\"')}",
+    img:     "${img}",
+    body: \`
+${body}
+    \`,
+  },`;
+
+    document.getElementById('code-output').textContent = code;
+  }
+
+  // ── コピー ──
+  function copyCode() {
+    const code = document.getElementById('code-output').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = 'コピーしました！✅';
+      btn.classList.add('ok');
+      setTimeout(() => {
+        btn.textContent = 'コピーする 📋';
+        btn.classList.remove('ok');
+      }, 2500);
+      showTab('code');
+    });
+  }
+
+  // ── リアルタイム入力監視 ──
+  ['f-title','f-date','f-excerpt','f-img','f-body'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updatePreview);
+  });
+
+  // ── 既存記事一覧 ──
+  const badgeMap = {'試合結果':'badge-game','練習風景':'badge-practice','イベント':'badge-event','お知らせ':'badge-notice'};
+  document.getElementById('post-count').textContent = NEWS_LIST.length;
+  document.getElementById('existing-list').innerHTML = NEWS_LIST.map(n => `
+    <div class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors">
+      <span class="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${badgeMap[n.cat]||'badge-notice'}">${n.cat}</span>
+      <span class="text-sm text-gray-700 flex-1 truncate">${n.title}</span>
+      <span class="text-xs text-gray-400 flex-shrink-0">${n.date}</span>
+    </div>`).join('');
+
+  // ── 初期プレビュー ──
+  updatePreview();
+</script>
+</body>
+</html>
