@@ -1,95 +1,335 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お問い合わせ - 井口ヤング</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="config.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ｜井口ヤング 三鷹市の少年野球チーム</title>
+  <meta name="description" content="井口ヤングへのお問い合わせはこちら。体験入部のご相談は公式LINEが最短です。メール・SNSでもお気軽にどうぞ。">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{'red-team':'#C8102E','red-dark':'#8B0000','gold':'#F7C948','line-green':'#06C755'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script src="js/common.js"></script>
+  <style>
+    /* フォーム送信ボタン */
+    .submit-btn {
+      background: #C8102E; color: #fff; font-weight: 900; font-size: 1.1rem;
+      padding: 16px 40px; border-radius: 14px; border: none; cursor: pointer;
+      width: 100%; transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(200,16,46,.35);
+    }
+    .submit-btn:hover { background: #8B0000; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,16,46,.4); }
+    .submit-btn:active { transform: scale(.98); }
+    /* SNS contact cards */
+    .sns-card { transition: transform .3s, box-shadow .3s; }
+    .sns-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(0,0,0,.15); }
+    /* success banner */
+    #form-success { display: none; }
+  </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body class="bg-gray-50">
 
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-red-600 flex items-center gap-2">
-                <i class="fas fa-baseball-ball"></i> <span id="nav-team-name">井口ヤング</span>
-            </a>
-            <div class="hidden md:flex space-x-6 font-medium">
-                <a href="index.html" class="hover:text-red-600 transition">ホーム</a>
-                <a href="team.html" class="hover:text-red-600 transition">チーム紹介</a>
-                <a href="recruit.html" class="hover:text-red-600 transition">部員募集</a>
-                <a href="news.html" class="hover:text-red-600 transition">活動報告</a>
-                <a href="contact.html" class="text-red-600 transition border-b-2 border-red-600">お問い合わせ</a>
-            </div>
+<a id="float-line" href="#" class="js-line" aria-label="公式LINE">
+  <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496A10 10 0 0012 22c5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+  <span>LINEで相談する</span>
+</a>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-white shadow-md">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-red-team flex items-center justify-center overflow-hidden flex-shrink-0">
+          <img src="images/logo.png" alt="ロゴ" class="w-full h-full object-cover" onerror="this.outerHTML='<span class=\'bebas text-white text-sm\'>IY</span>'">
         </div>
-    </nav>
-
-    <header class="bg-red-600 text-white py-16 text-center">
-        <h1 class="text-4xl font-bold mb-2">お問い合わせ</h1>
-        <p class="text-red-100">体験入部のご相談やチームに関する質問など、お気軽にご連絡ください！</p>
-    </header>
-
-    <main class="max-w-4xl mx-auto px-4 py-12 grid md:grid-template-columns md:grid-cols-2 gap-8">
-        
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between text-center md:text-left">
-            <div>
-                <span class="bg-green-100 text-green-700 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">おすすめ</span>
-                <h2 class="text-2xl font-bold mt-3 mb-4 text-gray-900">公式LINEから簡単お申し込み</h2>
-                <p class="text-gray-600 mb-6 leading-relaxed">
-                    見学・体験練習への参加予約は、公式LINEからが一番スムーズです！「今週末やってますか？」といったちょっとした質問も、チャット感覚でお気軽にどうぞ。
-                </p>
-            </div>
-            
-            <a id="link-line" href="#" target="_blank" class="flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-4 px-6 rounded-xl transition shadow-md w-full">
-                <i class="fab fa-line text-2xl"></i> LINEで体験・質問してみる
-            </a>
+        <div class="leading-tight">
+          <div class="bebas text-red-team text-xl leading-none tracking-wider">井口ヤング</div>
+          <div class="text-gray-400 text-xs">三鷹市の少年野球チーム</div>
         </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-1" id="desktop-nav"></nav>
+      <button id="hamburger" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+        <svg width="22" height="22" fill="none" stroke="#C8102E" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="12" x2="19" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white">
+    <nav id="mobile-nav" class="flex flex-col py-2"></nav>
+  </div>
+</header>
 
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between text-center md:text-left">
-            <div>
-                <span class="bg-red-100 text-red-700 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">メール</span>
-                <h2 class="text-2xl font-bold mt-3 mb-4 text-gray-900">メールでのお問い合わせ</h2>
-                <p class="text-gray-600 mb-6 leading-relaxed">
-                    LINEをお使いでない場合や、練習試合のお申し込み、その他の地域連携などのご相談は、下記公式メールアドレスまで直接ご連絡をお願いいたします。
-                </p>
-                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-6 text-center">
-                    <span class="font-mono text-lg font-bold text-red-600" id="team-email">iguchiyoung@gmail.com</span>
-                </div>
-            </div>
+<!-- HERO -->
+<section class="hero-bg stripe-deco relative">
+  <div class="relative z-10 text-center text-white px-4 py-16 sm:py-20">
+    <p class="text-gold bebas text-xl tracking-widest mb-2">Contact</p>
+    <h1 class="bebas text-6xl sm:text-7xl mb-4" style="text-shadow:0 4px 24px rgba(0,0,0,.4)">お問い合わせ</h1>
+    <p class="text-white/80 text-base max-w-lg mx-auto">体験入部のご相談からご質問まで、<br>お気軽にお問い合わせください。</p>
+  </div>
+</section>
 
-            <a id="link-email" href="#" class="flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-bold py-4 px-6 rounded-xl transition shadow-md w-full">
-                <i class="fas fa-envelope text-xl"></i> メールを送信する
-            </a>
+<!-- ★ SNS CONTACT CARDS（最速はLINE！） ★ -->
+<section class="bg-white py-14 sm:py-16 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-10 reveal">
+      <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">Quickest Way</p>
+      <h2 class="bebas text-4xl sm:text-5xl">最速のお問い合わせ方法</h2>
+      <p class="text-gray-500 text-sm mt-2">SNSからのご連絡が最も早くご返信できます</p>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-5 reveal">
+
+      <!-- LINE（最推奨） -->
+      <div class="sns-card bg-line-green rounded-2xl p-7 text-white text-center relative overflow-hidden">
+        <div class="absolute -top-6 -right-6 w-24 h-24 bg-white/10 rounded-full"></div>
+        <div class="relative z-10">
+          <div class="inline-flex items-center gap-1 bg-white/20 text-xs font-bold px-3 py-1 rounded-full mb-4">
+            ⭐ おすすめ
+          </div>
+          <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg width="36" height="36" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496A10 10 0 0012 22c5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+          </div>
+          <h3 class="bebas text-2xl mb-2">公式 LINE</h3>
+          <p class="text-white/85 text-xs mb-5 leading-relaxed">「体験したい」「費用を知りたい」<br>どんな質問でもOK！<br><strong>通常24時間以内にご返信</strong></p>
+          <a href="#" class="js-line block bg-white text-line-green font-black text-sm py-3 rounded-xl hover:bg-green-50 transition-colors">友だち追加して相談する →</a>
         </div>
-    </main>
+      </div>
 
-    <section class="max-w-4xl mx-auto px-4 pb-12">
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 flex gap-4">
-            <i class="fas fa-info-circle text-amber-500 text-2xl mt-1"></i>
-            <div>
-                <h4 class="font-bold text-amber-900 mb-1">体験練習にお越しの方へ</h4>
-                <p class="text-amber-800 text-sm leading-relaxed">
-                    事前の申し込みがなくても、当日に直接グラウンドへお越しいただいて構いません。動ける服装、帽子、お飲み物をお持ちください（グローブやバットはチームのものを貸し出しいたします）。
-                </p>
-            </div>
+      <!-- Instagram -->
+      <div class="sns-card insta-grad rounded-2xl p-7 text-white text-center">
+        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 mt-9">
+          <svg width="36" height="36" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         </div>
-    </section>
+        <h3 class="bebas text-2xl mb-2">Instagram</h3>
+        <p class="text-white/85 text-xs mb-5 leading-relaxed">練習・試合写真を毎週更新。<br>DMでのお問い合わせもOK！<br>@iguchiyoung</p>
+        <a href="#" class="js-instagram block bg-white text-pink-600 font-black text-sm py-3 rounded-xl hover:bg-pink-50 transition-colors">フォロー＆DMする →</a>
+      </div>
 
-    <footer class="bg-gray-950 text-gray-400 py-8 text-center text-sm">
-        <p>&copy; 2026 <span id="footer-team-name">井口ヤング</span>. All Rights Reserved.</p>
-    </footer>
+      <!-- Facebook -->
+      <div class="sns-card bg-blue-600 rounded-2xl p-7 text-white text-center">
+        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 mt-9">
+          <svg width="36" height="36" fill="white" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <h3 class="bebas text-2xl mb-2">Facebook</h3>
+        <p class="text-white/85 text-xs mb-5 leading-relaxed">スケジュールや試合速報、<br>お知らせを随時投稿中！<br>Messengerでも連絡OK。</p>
+        <a href="#" class="js-facebook block bg-white text-blue-600 font-black text-sm py-3 rounded-xl hover:bg-blue-50 transition-colors">ページを見る＆連絡する →</a>
+      </div>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof SITE_CONFIG !== 'undefined') {
-                document.getElementById('nav-team-name').textContent = SITE_CONFIG.teamInfo.name;
-                document.getElementById('footer-team-name').textContent = SITE_CONFIG.teamInfo.name;
-                document.getElementById('team-email').textContent = SITE_CONFIG.teamInfo.contactEmail;
-                document.getElementById('link-line').href = SITE_CONFIG.links.line;
-                document.getElementById('link-email').href = SITE_CONFIG.links.email;
-            }
-        });
-    </script>
+    <!-- メールアドレス表示 -->
+    <div class="mt-8 bg-red-50 border border-red-100 rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left reveal">
+      <div class="w-12 h-12 bg-red-team rounded-xl flex items-center justify-center flex-shrink-0">
+        <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <div>
+        <p class="text-gray-500 text-xs mb-0.5">メールでのお問い合わせ</p>
+        <a href="mailto:iguchiyoung@gmail.com" class="font-bold text-red-team text-lg hover:underline">iguchiyoung@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ お問い合わせフォーム ★ -->
+<section class="bg-gray-50 py-14 sm:py-16 px-4">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-10 reveal">
+      <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">Message Form</p>
+      <h2 class="bebas text-4xl sm:text-5xl">お問い合わせフォーム</h2>
+      <p class="text-gray-500 text-sm mt-2">内容を入力してお送りください。担当者よりご連絡します。</p>
+    </div>
+
+    <!-- 送信完了メッセージ -->
+    <div id="form-success" class="bg-green-50 border border-green-200 rounded-2xl p-8 text-center mb-8">
+      <div class="text-5xl mb-4">✅</div>
+      <h3 class="font-black text-green-800 text-xl mb-2">送信が完了しました！</h3>
+      <p class="text-green-700 text-sm">担当者より折り返しご連絡いたします。<br>お急ぎの場合は公式LINEへどうぞ。</p>
+      <a href="#" class="js-line inline-block mt-5 bg-line-green text-white font-bold px-6 py-2.5 rounded-xl text-sm">公式LINEへ →</a>
+    </div>
+
+    <form id="contact-form" class="bg-white rounded-2xl p-7 sm:p-10 shadow-sm border border-gray-100 reveal" novalidate>
+
+      <!-- お名前 -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-900 mb-2">
+          お名前（保護者様のお名前）<span class="text-red-team ml-1">必須</span>
+        </label>
+        <input type="text" name="name" required placeholder="例：山田 太郎" class="form-input" autocomplete="name">
+        <p class="error-msg hidden text-red-team text-xs mt-1.5">お名前を入力してください</p>
+      </div>
+
+      <!-- メールアドレス -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-900 mb-2">
+          メールアドレス<span class="text-red-team ml-1">必須</span>
+        </label>
+        <input type="email" name="email" required placeholder="例：sample@email.com" class="form-input" autocomplete="email">
+        <p class="error-msg hidden text-red-team text-xs mt-1.5">メールアドレスを入力してください</p>
+      </div>
+
+      <!-- 電話番号 -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-900 mb-2">電話番号（任意）</label>
+        <input type="tel" name="tel" placeholder="例：090-1234-5678" class="form-input" autocomplete="tel">
+      </div>
+
+      <!-- お問い合わせ種別 -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-900 mb-2">
+          お問い合わせの種類<span class="text-red-team ml-1">必須</span>
+        </label>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="flex items-center gap-2 cursor-pointer bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 hover:border-red-team transition-colors">
+            <input type="radio" name="type" value="体験入部について" class="accent-red-team">
+            <span class="text-sm font-medium">体験入部について</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 hover:border-red-team transition-colors">
+            <input type="radio" name="type" value="入部について" class="accent-red-team">
+            <span class="text-sm font-medium">入部について</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 hover:border-red-team transition-colors">
+            <input type="radio" name="type" value="費用について" class="accent-red-team">
+            <span class="text-sm font-medium">費用について</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 hover:border-red-team transition-colors">
+            <input type="radio" name="type" value="その他" class="accent-red-team">
+            <span class="text-sm font-medium">その他</span>
+          </label>
+        </div>
+        <p class="error-msg-type hidden text-red-team text-xs mt-1.5">種類を選択してください</p>
+      </div>
+
+      <!-- メッセージ -->
+      <div class="mb-8">
+        <label class="block text-sm font-bold text-gray-900 mb-2">
+          お問い合わせ内容<span class="text-red-team ml-1">必須</span>
+        </label>
+        <textarea name="message" required rows="5" placeholder="お子さんの学年・野球経験、ご質問など、なんでもご記入ください。" class="form-input resize-none"></textarea>
+        <p class="error-msg-msg hidden text-red-team text-xs mt-1.5">お問い合わせ内容を入力してください</p>
+      </div>
+
+      <button type="submit" class="submit-btn">送信する</button>
+
+      <p class="text-center text-gray-400 text-xs mt-5">
+        ※ お急ぎの場合は
+        <a href="#" class="js-line text-line-green font-bold underline">公式LINE</a>
+        が最速です（通常24時間以内にご返信）
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="bg-white py-14 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-10 reveal">
+      <p class="text-red-team font-bold text-sm tracking-widest uppercase mb-1">Access</p>
+      <h2 class="bebas text-4xl sm:text-5xl">練習場所・アクセス</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6 reveal">
+      <div class="bg-gray-50 rounded-2xl p-7 border border-gray-100">
+        <h3 class="font-black text-gray-900 text-lg mb-4 flex items-center gap-2">
+          <span class="text-red-team">📍</span> 主な練習グラウンド
+        </h3>
+        <ul class="space-y-3 text-sm text-gray-700">
+          <li class="flex items-start gap-2">
+            <span class="text-red-team mt-0.5">▶</span>
+            <div><span class="font-bold">三鷹市立にしみたか学園 井口小学校グラウンド</span><br>東京都三鷹市（代表グラウンド）</div>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-red-team mt-0.5">▶</span>
+            <div><span class="font-bold">三鷹市井口特設グラウンド</span></div>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-red-team mt-0.5">▶</span>
+            <div><span class="font-bold">三鷹市大沢グラウンド</span></div>
+          </li>
+        </ul>
+        <p class="text-xs text-gray-400 mt-4">※ 当日のグラウンドは公式LINEでご確認ください</p>
+      </div>
+      <div class="bg-red-50 rounded-2xl p-7 border border-red-100">
+        <h3 class="font-black text-gray-900 text-lg mb-4 flex items-center gap-2">
+          <span class="text-red-team">📅</span> 練習スケジュール
+        </h3>
+        <ul class="space-y-3 text-sm text-gray-700">
+          <li class="flex items-center gap-2"><span class="text-red-team font-bold">曜日：</span>主に土曜・日曜・祝日</li>
+          <li class="flex items-center gap-2"><span class="text-red-team font-bold">時間：</span>9:00〜17:00（学年により異なる）</li>
+          <li class="flex items-center gap-2"><span class="text-red-team font-bold">対象：</span>小学1〜6年生 男女不問</li>
+        </ul>
+        <div class="mt-5 pt-4 border-t border-red-200">
+          <p class="text-xs text-gray-500 mb-3">体験は事前申込不要。直接グラウンドにどうぞ！</p>
+          <a href="#" class="js-line inline-flex items-center gap-2 bg-line-green text-white font-bold text-sm px-5 py-2.5 rounded-xl">
+            💬 当日のグラウンドをLINEで確認
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-400 py-12 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid sm:grid-cols-3 gap-8 mb-8">
+      <div>
+        <div class="bebas text-2xl text-white mb-2">井口ヤング</div>
+        <p class="text-sm">東京都三鷹市の少年野球チーム</p>
+        <div class="flex gap-3 mt-4">
+          <a href="#" class="js-line text-xs bg-line-green text-white px-3 py-1.5 rounded-full font-bold">LINE</a>
+          <a href="#" class="js-instagram text-xs bg-gradient-to-r from-yellow-500 to-pink-500 text-white px-3 py-1.5 rounded-full font-bold">Instagram</a>
+          <a href="#" class="js-facebook text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full font-bold">Facebook</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-3 text-sm uppercase tracking-wider">メニュー</h4>
+        <nav class="flex flex-col gap-2 text-sm" id="footer-nav"></nav>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-3 text-sm uppercase tracking-wider">お問い合わせ先</h4>
+        <ul class="space-y-2 text-sm">
+          <li>✉️ <a href="mailto:iguchiyoung@gmail.com" class="hover:text-white">iguchiyoung@gmail.com</a></li>
+          <li>💬 <a href="#" class="js-line hover:text-white">公式LINE（最速）</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 pt-6 text-center text-xs">
+      <p>© 2025 井口ヤング All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  initSite({ root:'.', activePage:'contact.html' });
+
+  // シンプルなフォームバリデーション（実際の送信はFormspreeやGAS等と連携）
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+    const name    = this.querySelector('[name="name"]');
+    const email   = this.querySelector('[name="email"]');
+    const type    = this.querySelector('[name="type"]:checked');
+    const message = this.querySelector('[name="message"]');
+
+    this.querySelectorAll('.error-msg, .error-msg-type, .error-msg-msg').forEach(el => el.classList.add('hidden'));
+
+    if (!name.value.trim())    { name.nextElementSibling.classList.remove('hidden'); valid = false; }
+    if (!email.value.includes('@')) { email.nextElementSibling.classList.remove('hidden'); valid = false; }
+    if (!type)                 { this.querySelector('.error-msg-type').classList.remove('hidden'); valid = false; }
+    if (!message.value.trim()) { this.querySelector('.error-msg-msg').classList.remove('hidden'); valid = false; }
+
+    if (valid) {
+      // ★ 実際の送信処理をここに追加（Formspree等）
+      // 例: fetch('https://formspree.io/f/XXXXXXXX', { method:'POST', body: new FormData(this) })
+      this.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+      window.scrollTo({ top: document.getElementById('form-success').offsetTop - 80, behavior: 'smooth' });
+    }
+  });
+</script>
 </body>
 </html>

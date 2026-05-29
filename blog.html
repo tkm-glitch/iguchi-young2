@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>活動報告｜井口ヤング 三鷹市の少年野球チーム</title>
+  <meta name="description" content="井口ヤングの活動報告ページ。試合結果・練習風景・イベントなどをお届けします。">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{'red-team':'#C8102E','red-dark':'#8B0000','gold':'#F7C948','line-green':'#06C755'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script src="news-list.js"></script>
+  <script src="js/common.js"></script>
+  <style>
+    .filter-btn { transition: background .2s, color .2s; }
+    .filter-btn.active { background: #C8102E; color: #fff; }
+    .news-card { transition: transform .3s, box-shadow .3s; }
+    .news-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(200,16,46,.18); }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+<a id="float-line" href="#" class="js-line" aria-label="公式LINE">
+  <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.059 2 11.07c0 4.49 3.65 8.24 8.58 8.962l-.5 1.857c-.08.297.165.573.458.51l2.17-.496A10 10 0 0012 22c5.523 0 10-4.059 10-9.07S17.523 2 12 2z"/></svg>
+  <span>LINEで相談する</span>
+</a>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-white shadow-md">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-red-team flex items-center justify-center overflow-hidden flex-shrink-0">
+          <img src="images/logo.png" alt="ロゴ" class="w-full h-full object-cover" onerror="this.outerHTML='<span class=\'bebas text-white text-sm\'>IY</span>'">
+        </div>
+        <div class="leading-tight">
+          <div class="bebas text-red-team text-xl leading-none tracking-wider">井口ヤング</div>
+          <div class="text-gray-400 text-xs">三鷹市の少年野球チーム</div>
+        </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-1" id="desktop-nav"></nav>
+      <button id="hamburger" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+        <svg width="22" height="22" fill="none" stroke="#C8102E" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="12" x2="19" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white">
+    <nav id="mobile-nav" class="flex flex-col py-2"></nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-bg stripe-deco relative">
+  <div class="relative z-10 text-center text-white px-4 py-16 sm:py-20">
+    <p class="text-gold bebas text-xl tracking-widest mb-2">News &amp; Report</p>
+    <h1 class="bebas text-6xl sm:text-7xl mb-3" style="text-shadow:0 4px 24px rgba(0,0,0,.4)">活動報告</h1>
+    <p class="text-white/75 text-sm">試合結果・練習風景・イベントなどをお届けします</p>
+  </div>
+</section>
+
+<!-- FILTER + ARTICLES -->
+<section class="py-12 sm:py-16 px-4">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Category filter -->
+    <div class="flex flex-wrap gap-2 mb-10 reveal" id="filter-bar">
+      <button class="filter-btn active font-bold text-sm px-5 py-2 rounded-full border-2 border-red-team" data-cat="all">すべて</button>
+      <button class="filter-btn font-bold text-sm px-5 py-2 rounded-full border-2 border-gray-200 text-gray-600 hover:border-red-team" data-cat="試合結果">試合結果</button>
+      <button class="filter-btn font-bold text-sm px-5 py-2 rounded-full border-2 border-gray-200 text-gray-600 hover:border-red-team" data-cat="練習風景">練習風景</button>
+      <button class="filter-btn font-bold text-sm px-5 py-2 rounded-full border-2 border-gray-200 text-gray-600 hover:border-red-team" data-cat="イベント">イベント</button>
+      <button class="filter-btn font-bold text-sm px-5 py-2 rounded-full border-2 border-gray-200 text-gray-600 hover:border-red-team" data-cat="お知らせ">お知らせ</button>
+    </div>
+
+    <!-- Article grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="article-grid"></div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="hidden text-center py-20 text-gray-400">
+      <div class="text-5xl mb-4">⚾</div>
+      <p class="font-medium">該当する記事がありません</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="bg-red-team stripe-deco py-14 px-4">
+  <div class="max-w-3xl mx-auto text-center text-white reveal">
+    <h2 class="bebas text-4xl sm:text-5xl mb-4">SNSでもリアルタイム更新中！</h2>
+    <p class="text-white/80 mb-8 text-sm sm:text-base">Instagramでは写真を、Facebookでは試合スケジュールをお届けしています。</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#" class="js-instagram insta-grad font-black text-white px-8 py-3.5 rounded-xl shadow-lg text-base">📸 Instagramをフォロー</a>
+      <a href="#" class="js-facebook bg-blue-600 hover:bg-blue-500 text-white font-black px-8 py-3.5 rounded-xl shadow-lg text-base transition-colors">📘 Facebookページを見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-400 py-10 px-4 text-sm">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="bebas text-2xl text-white">井口ヤング</div>
+    <nav class="flex flex-wrap gap-4 justify-center" id="footer-nav"></nav>
+    <p class="text-xs">© 2025 井口ヤング All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  initSite({ root:'.', activePage:'blog.html' });
+
+  const badgeMap = {'試合結果':'badge-game','練習風景':'badge-practice','イベント':'badge-event','お知らせ':'badge-notice'};
+
+  function formatDate(d) {
+    const [y,m,day] = d.split('-');
+    return `${y}年${parseInt(m)}月${parseInt(day)}日`;
+  }
+
+  function renderArticles(cat) {
+    const list = cat === 'all' ? NEWS_LIST : NEWS_LIST.filter(n => n.cat === cat);
+    const grid = document.getElementById('article-grid');
+    const empty = document.getElementById('empty-state');
+    if (!list.length) { grid.innerHTML = ''; empty.classList.remove('hidden'); return; }
+    empty.classList.add('hidden');
+    grid.innerHTML = list.map(n => `
+      <a href="news/${n.file}" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm block">
+        <div class="aspect-card relative overflow-hidden">
+          <img src="${n.img || 'images/blog-default.jpg'}" alt="${n.title}" class="img-cover" data-fallback="#fef2f2">
+          <div class="absolute top-3 left-3">
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full ${badgeMap[n.cat]||'badge-notice'}">${n.cat}</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <p class="text-gray-400 text-xs mb-1.5">${formatDate(n.date)}</p>
+          <h2 class="font-bold text-gray-900 text-base leading-snug mb-2">${n.title}</h2>
+          <p class="text-gray-500 text-sm leading-relaxed line-clamp-2">${n.excerpt || ''}</p>
+        </div>
+      </a>`).join('');
+  }
+
+  renderArticles('all');
+
+  // Filter buttons
+  document.getElementById('filter-bar').addEventListener('click', e => {
+    const btn = e.target.closest('[data-cat]');
+    if (!btn) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderArticles(btn.dataset.cat);
+  });
+</script>
+</body>
+</html>

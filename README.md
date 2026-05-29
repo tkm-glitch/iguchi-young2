@@ -1,117 +1,145 @@
-# 井口ヤング 公式サイト — 運営ガイド
+# 井口ヤング 公式サイト 運用ガイド
 
-> **GitHub Pages で無料公開できる静的サイトです。**  
-> HTMLの知識がなくても、このガイドに従えば更新できます。
+> GitHub Pages で公開する静的サイトです。HTMLの知識がなくてもこのガイドに従えば更新できます。
 
 ---
 
-## 📁 ファイル構成（触るのは★のファイルだけ）
+## 📁 ファイル構成
 
 ```
-iguchi-baseball/
-├── ★ config.js          ← チーム情報（URL・名前・連絡先）を変えるだけでOK
-├── ★ news-list.js       ← 新しい記事を追加するときここに1行書く
-├── index.html           ← トップページ（基本触らない）
-├── team.html            ← チーム紹介ページ
-├── recruit.html         ← 部員募集ページ
-├── contact.html         ← お問い合わせページ
+iguchi-young2/
+├── index.html          ← トップページ
+├── team.html           ← チーム紹介
+├── blog.html           ← 活動報告一覧（404解消済み）
+├── recruit.html        ← 部員募集・体験入部
+├── contact.html        ← お問い合わせ
+├── config.js           ← ★ チーム情報・URL設定（ここを編集）
+├── news-list.js        ← ★ 活動報告の記事リスト（ここに追加）
 ├── news/
-│   ├── index.html       ← 活動報告一覧（自動生成）
-│   ├── ★ template.html ← 記事の「型」←コピーして使う
-│   └── 2025-06-15.html  ← 記事サンプル（参考にしてください）
-├── css/style.css        ← デザイン（触らない）
-└── js/                  ← プログラム（触らない）
+│   ├── template.html   ← 記事の「型」（コピーして使う）
+│   ├── 2025-06-08.html ← 記事サンプル①
+│   ├── 2025-05-25.html ← 記事サンプル②
+│   └── 2025-05-10.html ← 記事サンプル③
+├── images/             ← 写真・画像はここに入れる
+│   ├── logo.png
+│   ├── main-hero.jpg
+│   ├── team-photo.jpg
+│   ├── gallery1.jpg 〜 gallery6.jpg
+│   ├── blog1.jpg 〜 blog3.jpg
+│   └── blog-default.jpg（記事のデフォルト画像）
+├── css/
+│   └── style.css       ← 共通スタイル（通常編集不要）
+└── js/
+    └── common.js       ← 共通JS（通常編集不要）
 ```
 
 ---
 
-## 🚀 GitHubPages への公開手順（初回のみ）
+## 🔧 チーム情報・URLを変更する
 
-### 1. GitHubアカウントを作る
-→ https://github.com/ でサインアップ（無料）
-
-### 2. リポジトリを作る
-1. GitHubにログイン
-2. 右上の「＋」→「New repository」
-3. Repository name に `iguchi-baseball` と入力
-4. 「Public」を選択
-5. 「Create repository」をクリック
-
-### 3. ファイルをアップロードする
-1. 作成したリポジトリのページを開く
-2. 「uploading an existing file」をクリック
-3. このフォルダ内のファイルを**全部**ドラッグ&ドロップ
-4. 「Commit changes」をクリック
-
-### 4. GitHub Pages を有効にする
-1. リポジトリの「Settings」タブ
-2. 左メニューの「Pages」
-3. Source を「Deploy from a branch」に設定
-4. Branch を「main」、フォルダを「/(root)」にして「Save」
-5. 数分後に `https://【ユーザー名】.github.io/iguchi-baseball/` で公開完了！
-
-### 5. config.js を更新する
-公開URLが決まったら `config.js` の `siteUrl` を書き換えてください。
-
----
-
-## ✍️ 活動報告（記事）の追加方法
-
-### STEP 1 — テンプレートをコピーする
-`news/template.html` を同じフォルダにコピーし、
-ファイル名を **`YYYY-MM-DD.html`** に変更します。
-（例：`2025-07-20.html`）
-
-### STEP 2 — 記事を書く
-コピーしたファイルをテキストエディタ（メモ帳でもOK）で開き、
-`【 】` の部分を書き換えてください。コメント（`<!-- -->`内）に
-「ここに何を書くか」が書いてあります。
-
-### STEP 3 — news-list.js に1行追加する
-`news-list.js` を開いて、一番上に1行追加します。
+**`config.js`** を開いて、以下の値を書き換えるだけです。
 
 ```js
-const NEWS_LIST = [
-  { date:"2025-07-20", title:"夏の練習試合！熱戦を制しました", cat:"試合", file:"2025-07-20.html" },  // ← 追加
-  { date:"2025-06-15", title:"初夏の練習試合...", cat:"試合", file:"2025-06-15.html" },
+contact: {
+  lineUrl:      "https://lin.ee/oZJ19DI",           // LINE
+  instagramUrl: "https://www.instagram.com/iguchiyoung/", // Instagram
+  facebookUrl:  "https://www.facebook.com/iguchiyoung",   // Facebook
+  email:        "iguchiyoung@gmail.com",             // メール
   ...
+}
 ```
 
-**カテゴリ（catの値）は以下の4種類から選んでください：**
-- `"試合"` — 試合結果
-- `"練習"` — 練習風景
-- `"イベント"` — イベント・行事
-- `"お知らせ"` — スケジュール変更など
-
-### STEP 4 — GitHubにアップロード
-新しいファイルと更新した `news-list.js` をGitHubの同じリポジトリにアップロードすれば、自動でサイトに反映されます。
+`config.js` を変えれば **全ページのURL・情報が自動で更新** されます。
 
 ---
 
-## 📷 写真の追加方法
+## 📝 活動報告を追加する方法（5分でできます）
 
-1. 写真を `images/` フォルダに入れる（例：`images/2025-07-20-01.jpg`）
-2. 記事HTML内に以下を書く：
+### STEP 1 ― 記事ファイルを作る
 
-```html
-<img src="../images/2025-07-20-01.jpg" alt="試合の様子">
+1. `news/template.html` をコピーする
+2. ファイル名を日付にする（例：`news/2025-07-20.html`）
+3. ファイルを開いて `←ここを変える` とコメントされた箇所を書き換える
+
+### STEP 2 ― `news-list.js` に追加する
+
+`news-list.js` の **先頭**（`const NEWS_LIST = [` のすぐ下）に追加します：
+
+```js
+{
+  date:    "2025-07-20",            // YYYY-MM-DD 形式
+  title:   "夏季大会 優勝！",        // 記事タイトル
+  cat:     "試合結果",               // 試合結果 / 練習風景 / イベント / お知らせ
+  excerpt: "今日は夏季大会の決勝...", // 一覧に表示される概要（50文字程度）
+  img:     "images/blog4.jpg",      // サムネイル画像（images/ フォルダ内）
+  file:    "2025-07-20.html",       // news/ 内のファイル名
+},
 ```
 
----
+### STEP 3 ― GitHub にアップロードする
 
-## ❓ 困ったときのチェックリスト
-
-| 症状 | 確認箇所 |
-|------|---------|
-| LINEボタンを押しても開かない | `config.js` の `lineUrl` を確認 |
-| Instagramのリンクが違う | `config.js` の `instagramUrl` を確認 |
-| 記事が一覧に出ない | `news-list.js` の記述ミスを確認（カンマ・引用符） |
-| サイトが更新されない | GitHubへのアップロードを確認（数分かかる場合あり） |
+変更した `news-list.js` と新しい `news/YYYY-MM-DD.html`、使った画像を GitHub にプッシュすれば完了です。
 
 ---
 
-## 📞 サイト制作について
+## 🖼️ 画像を追加・変更する
 
-このサイトはGitHub Pages用の静的HTMLサイトです。  
-サーバー代・ドメイン代なし（無料）で運営できます。  
-ご不明な点はチームのLINEまたはメールでご連絡ください。
+1. 写真ファイルを用意する（JPEG推奨）
+2. `images/` フォルダにアップロードする
+3. `config.js` または記事HTMLの `src="images/XXX.jpg"` を書き換える
+
+| 画像 | 推奨サイズ | 用途 |
+|------|-----------|------|
+| `logo.png` | 200×200px | ヘッダーロゴ |
+| `main-hero.jpg` | 1920×1080px | トップのヒーロー背景 |
+| `team-photo.jpg` | 1200×800px | チーム集合写真 |
+| `gallery1〜6.jpg` | 800×800px（正方形） | ギャラリー |
+| `blog1.jpg` など | 800×600px | 記事サムネイル |
+
+---
+
+## 📱 SNSリンク一覧（現在の設定）
+
+| SNS | URL |
+|-----|-----|
+| 公式 LINE | https://lin.ee/oZJ19DI |
+| Instagram | https://www.instagram.com/iguchiyoung/ |
+| Facebook | https://www.facebook.com/iguchiyoung |
+| メール | iguchiyoung@gmail.com |
+
+---
+
+## 📬 お問い合わせフォームを動かすには
+
+現在のフォームは**バリデーションのみ**で、実際の送信処理は接続されていません。
+以下のどちらかで送信機能を追加できます：
+
+### 方法① Formspree（無料・簡単）
+1. https://formspree.io でアカウント作成
+2. フォームIDを取得
+3. `contact.html` 内のコメント部分を書き換える：
+
+```js
+// ★ 実際の送信処理をここに追加
+fetch('https://formspree.io/f/【取得したID】', {
+  method: 'POST',
+  body: new FormData(this),
+  headers: { 'Accept': 'application/json' }
+}).then(() => { /* 送信完了処理 */ });
+```
+
+### 方法② Google フォームへリダイレクト
+Googleフォームで受信フォームを作り、`action` に URL を設定する方法もあります。
+
+---
+
+## 🚀 GitHub Pages への公開手順
+
+1. このフォルダを `iguchi-young2` という名前の GitHub リポジトリに push する
+2. リポジトリの **Settings → Pages** を開く
+3. Source を `main` ブランチ、`/ (root)` に設定して **Save**
+4. 数分後に `https://tkm-glitch.github.io/iguchi-young2/` で公開される
+
+---
+
+*© 2025 井口ヤング*
